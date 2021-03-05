@@ -29,11 +29,11 @@ The .NET gRPC client can call services from these .NET implementations with some
 
 ## Required configuration
 
-A HTTP provider must be configured using `GrpcChannelOptions.HttpHandler`. If a handler isn't configured an error will be thrown:
+An HTTP provider must be configured using `GrpcChannelOptions.HttpHandler`. If a handler isn't configured, an error is thrown:
 
-> System.PlatformNotSupportedException: gRPC requires extra configuration to successfully make RPC calls on .NET implementations that don't have support for gRPC over HTTP/2. An HTTP provider must be specified using GrpcChannelOptions.HttpHandler. The configured HTTP provider must either support HTTP/2 or be configured to use gRPC-Web.
+> `System.PlatformNotSupportedException`: gRPC requires extra configuration to successfully make RPC calls on .NET implementations that don't have support for gRPC over HTTP/2. An HTTP provider must be specified using `GrpcChannelOptions.HttpHandler`. The configured HTTP provider must either support HTTP/2 or be configured to use gRPC-Web.
 
-.NET implementations that don't support HTTP/2, such as UWP, Xamarin and Unity, can use gRPC-Web as an alternative.
+.NET implementations that don't support HTTP/2, such as UWP, Xamarin, and Unity, can use gRPC-Web as an alternative.
 
 ```csharp
 var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
@@ -49,12 +49,12 @@ For more information, see [Configure gRPC-Web with the .NET gRPC client](xref:gr
 
 ## .NET Framework
 
-.NET Framework has limited support for gRPC over HTTP/2. To enable it, configure the channel to use <xref:System.Net.Http.WinHttpHandler>. This handler uses WinHTTP in Windows to send gRPC calls over HTTP/2.
+.NET Framework has limited support for gRPC over HTTP/2. To enable gRPC over HTTP/2 on .NET Framework, configure the channel to use <xref:System.Net.Http.WinHttpHandler>. The `WinHttpHandler` handler uses WinHTTP in Windows to send gRPC calls over HTTP/2.
 
-There are requirements and restrictions to using `WinHttpHandler`:
+Requirements and restrictions to using `WinHttpHandler`:
 
-* Ensure the operating system is Windows 10 Build 19622 or later.
-* Add a reference to the [System.Net.Http.WinHttpHandler](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/) package.
+* Windows 10 Build 19622 or later.
+* A reference to the [System.Net.Http.WinHttpHandler](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/) NuGet package.
 * Only unary and server streaming gRPC calls are supported.
 * Only gRPC calls over TLS are supported.
 
@@ -71,11 +71,11 @@ var response = await client.SayHelloAsync(new HelloRequest { Name = ".NET" });
 > [!NOTE]
 > .NET Framework support is in its early stages and requires using pre-release software.
 > * Windows 10 Build 19622 or later is available as a [Windows Insiders](https://insider.windows.com/) build.
-> * Required version of `System.Net.Http.WinHttpHandler` is not yet on NuGet.org. The latest pre-release version from the NuGet feed [here](https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json) should be used.
+> * The required version of `System.Net.Http.WinHttpHandler` is not currently available on NuGet.org. The latest pre-release version is available on [this NuGet feed](https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json) should be used.
 
 ## gRPC C# core-library
 
-An alternative option is to use [gRPC C# core-library](https://grpc.io/docs/languages/csharp/quickstart/) to make gRPC calls. It is a third party library that supports .NET Framework and Xamarin. gRPC C-core is not supported by Microsoft.
+An alternative option for .NET Framework and Xamarin is to use [gRPC C# core-library](https://grpc.io/docs/languages/csharp/quickstart/) to make gRPC calls. It's a third party library that supports making gRPC calls over HTTP/2 on .NET Framework and Xamarin. gRPC C-core is not supported by Microsoft.
 
 ## Additional resources
 
